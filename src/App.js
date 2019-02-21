@@ -46,7 +46,6 @@ class App extends Component {
 
   getMappedShowerThoughtList(){
     let showerThoughtsArray = this.state.data;
-    let keyIterator = 0;
     let that = this;
 
     if (this.state.data === null){
@@ -58,9 +57,8 @@ class App extends Component {
     }
 
     const listItems = showerThoughtsArray.map(function(item, index) {
-      keyIterator++;
       return (
-        <Card key={keyIterator} show={that.state.currentIndex === index} {...item.data} />
+        <Card key={index} show={that.state.currentIndex === index} {...item.data} />
       );
     });
 
