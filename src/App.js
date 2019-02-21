@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Card from './components/card';
 import './App.css';
 
 class App extends Component {
@@ -6,9 +7,9 @@ class App extends Component {
     super(props);
 
     this.state = {
-      title: '',
-      link: '',
-      author: '',
+      data: null,
+      currentIndex: 0,
+      length: 0,
     };
   }
 
@@ -18,40 +19,69 @@ class App extends Component {
         return response.json();
       })
       .then(data => {
-        let parsedJsonObject = this.parseJsonObject(data);
         this.setState({
-          title: parsedJsonObject.title,
-          link: parsedJsonObject.link,
-          author: parsedJsonObject.author
+          data: data.data.children,
+          length: data.data.children.length
         });
       });
   }
 
-  parseJsonObject(data) {
-    let dataChildrenArray = data.data.children;
-    let randomElement = dataChildrenArray[Math.floor(Math.random()*dataChildrenArray.length)];
-    let randomElementData = randomElement.data;
-    let parsedRandomElementData = {
-      title: randomElementData.title,
-      link: 'https://reddit.com' + randomElementData.permalink,
-      author: randomElementData.author
+  next() {
+    if (this.state.currentIndex < this.state.length - 1) {
+      this.setState({ currentIndex: this.state.currentIndex + 1 })
+    }
+    else {
+      this.setState({ currentIndex: 0 })
+    }
+  }
+
+  prev() {
+    if (this.state.currentIndex > 0) {
+      this.setState({ currentIndex: this.state.currentIndex -1 })
+    }
+    else {
+      this.setState({ currentIndex: this.state.length - 1 })
+    }
+  }
+
+  getMappedShowerThoughtList(){
+    let showerThoughtsArray = this.state.data;
+    let keyIterator = 0;
+    let that = this;
+
+    if (this.state.data === null){
+      return (
+        <li>
+          Loading...
+        </li>
+      );
     }
 
-    return parsedRandomElementData;
+    const listItems = showerThoughtsArray.map(function(item, index) {
+      keyIterator++;
+      return (
+        <Card key={keyIterator} show={that.state.currentIndex === index} {...item.data} />
+      );
+    });
+
+    return listItems;
   }
 
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          Shower Thoughts
-        </header>
-        <div className="container">
-          <div className="st-detail">
-            <a href={this.state.link}>{this.state.title}</a>
-          </div>
-          <div className="st-author">
-            - {this.state.author}
+        <div className="App-container">
+          <header className="App-header">
+            Shower Thoughts
+          </header>
+          <div className="container">
+            <ul className="card-list">
+              {this.getMappedShowerThoughtList()}
+            </ul>
+            <nav>
+              <span className="prev" onClick={this.prev.bind(this)} />
+              <span className="next" onClick={this.next.bind(this)} />
+            </nav>
           </div>
         </div>
       </div>

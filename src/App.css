@@ -1,66 +1,73 @@
 .App {
-  text-align: top;
+  position: relative;
+  height: 100vw;
+  width: 100vw;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
+.App-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 85%;
+  transform:translate(-50%, -50%);
 }
 
 .App-header {
-  min-height: 20vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  font-size: calc(10px + 4vmin);
   color: white;
+}
+
+.author {
+  font-size: calc(10px + 1vmin);
+  text-align: right;
+  padding-right: 10vmin;
+  padding-top: 5vmin;
+}
+
+.card {
+  display: none;
+}
+
+.card-list {
+  padding-inline-start: 0;
 }
 
 .container {
   display: flex;
   flex-direction: column;
-  margin-left: 3em;
-  margin-right: 3em;
   color: white;
 }
 
-.st-detail {
-  padding-bottom: 20px;
+nav {
+  text-align: center;
+  display: flex;
+  justify-content:space-evenly;
+  padding-top: 5vmin;
 }
 
-.st-author {
-  text-align: right;
-  width: 90%;
+.next {
+  transform: rotate(-45deg);
 }
 
-a {
-  text-decoration: none;
-  color: white;
+.prev, .next {
+  display: inline-block;
+  border-right: 4px solid white;
+  border-bottom: 4px solid white;
+  width: 10px; height: 10px;
+  cursor: pointer;
 }
 
-body {
-  background: #5AB9EA,
+.prev {
+  transform: rotate(-225deg);
 }
 
-
-/*
-Option A
-
-#5680E9
-#84CEEB
-#5AB9EA
-#C1C8E4
-#8860D0
-*/
-
-/*
-Option B
-
-#25274D
-#464866
-#AAABB8
-#2E9CCA
-#29648A
-*/
+.show {
+  display: inline !important;
+}
+.title {
+  font-size: calc(10px + 2vmin);
+}
